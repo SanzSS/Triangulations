@@ -177,6 +177,6 @@ export const searchKeys = [
     "date",
 ];
 
-export const defaultDateValues = [0, 100];
+export const defaultDateValues = [0, 2000];
 
 export const defaultDimensionValues = [0, 100];

@@ -68,8 +68,12 @@ export default function Explore() {
                 // console.log(row);
             }
             // TODO
-            let date = database.indexOf(row["titleOriginal"]).normalizedDate;
             // console.log(date);
+            // if (database.indexOf(row["titleOriginal"]) == -1){
+            //     return false;
+            // }
+            // let date = database.indexOf(row["titleOriginal"]).normalizedDate;
+            let date = normalizedDate(row["date"]);
             if (date < dateFilter[0] || date > dateFilter[1]) {
                 return false;
             }
@@ -109,4 +113,17 @@ export default function Explore() {
             <Table database={filterData(database)}></Table>
         </div>
     );
+}
+
+function normalizedDate(date) {
+    if (date[0] === "~"){
+        return Number(date.slice(1, 5));
+    }
+    if (date[0] === "["){
+        return 0;
+    }
+    if (date[3] === " "){
+        return Number(date.slice(0, 4));
+    }
+    return Number(date.slice(0, 5));
 }
