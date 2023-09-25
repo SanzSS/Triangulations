@@ -4,15 +4,19 @@ import React, { Component } from "react";
 class ColumnLabels extends Component {
     render() {
         const {
-            sortAuthorNameOriginal,
-            sortAuthorNameTranslit,
-            sortTitleOriginal,
-            sortTitleTranslit,
-            sortLanguage,
-            sortGenre,
-            sortType,
-            sortDate,
+            // sortAuthorNameOriginal,
+            // sortAuthorNameTranslit,
+            // sortTitleOriginal,
+            // sortTitleTranslit,
+            // sortLanguage,
+            // sortGenre,
+            // sortType,
+            // sortDate,
+            toggleSort,
         } = this.props;
+    // const sortAuthorNameOriginal = () => {
+        
+    // }
         return (
             <thead>
                 <tr class='header-footer'>
@@ -22,7 +26,7 @@ class ColumnLabels extends Component {
                         rowSpan='1'
                         colSpan='1'
                         aria-label='AUTHOR NAME (ORIGINAL LANGUAGE): activate to sort column ascending'
-                        onClick={sortAuthorNameOriginal}
+                        onClick={() => {toggleSort('authorNameOriginal')}}
                     >
                         Author Name (Original Language)
                     </th>
@@ -32,7 +36,7 @@ class ColumnLabels extends Component {
                         rowSpan='1'
                         colSpan='1'
                         aria-label='AUTHOR NAME TRANSLITERATION: activate to sort column ascending'
-                        onClick={sortAuthorNameTranslit}
+                        onClick={() => {toggleSort('authorNameTranslit')}}
                     >
                         Author Name (Transliteration)
                     </th>
@@ -42,7 +46,8 @@ class ColumnLabels extends Component {
                         rowSpan='1'
                         colSpan='1'
                         aria-label='TITLE OF WORK (ORIGINAL LANGUAGE): activate to sort column ascending'
-                        // onClick={sortTitleOriginal}
+                        onClick={() => {toggleSort('titleOriginal')}}
+
                     >
                         Title of Work (Original Language)
                     </th>
@@ -52,7 +57,8 @@ class ColumnLabels extends Component {
                         rowSpan='1'
                         colSpan='1'
                         aria-label='TITLE OF WORK TRANSLITERATION: activate to sort column ascending'
-                        // onClick={sortTitleTranslit}
+                        onClick={() => {toggleSort('titleTranslit')}}
+
                     >
                         Title of Work (Transliteration)
                     </th>
@@ -62,7 +68,7 @@ class ColumnLabels extends Component {
                         rowSpan='1'
                         colSpan='1'
                         aria-label='LANGUAGE: activate to sort column ascending'
-                        // onClick={sortLanguage}
+                        onClick= {() => {toggleSort('language')}}
                     >
                         Language
                     </th>
@@ -72,7 +78,8 @@ class ColumnLabels extends Component {
                         rowSpan='1'
                         colSpan='1'
                         aria-label='GENRE: activate to sort column ascending'
-                        // onClick={sortGenre}
+                        onClick={() => {toggleSort('genre')}}
+
                     >
                         Genre
                     </th>
@@ -82,7 +89,8 @@ class ColumnLabels extends Component {
                         rowSpan='1'
                         colSpan='1'
                         aria-label='TYPE: activate to sort column ascending'
-                        // onClick={sortType}
+                        onClick={() => {toggleSort('textType')}}
+
                     >
                         Type
                     </th>
@@ -92,7 +100,8 @@ class ColumnLabels extends Component {
                         rowSpan='1'
                         colSpan='1'
                         aria-label='DATE: activate to sort column ascending'
-                        // onClick={sortDate}
+                        onClick={() => {toggleSort('date')}}
+
                     >
                         Date
                     </th>

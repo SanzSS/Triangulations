@@ -8,12 +8,40 @@ const Table = (props) => {
 
     let pageSize = 15;
     const [currentPage, setCurrentPage] = useState(1);
+    const [sortConfig, setSortConfig] = useState(null);
 
+    let sortedDatabase = database;
+    if (sortConfig !== null) {
+        sortedDatabase = [...database].sort((a, b) => {
+            const key = sortConfig.key;
+            if (a[key] < b[key]) {
+                return sortConfig.direction === 'ascending' ? -1 : 1;
+            }
+            if (a[key] > b[key]) {
+                return sortConfig.direction === 'ascending' ? 1 : -1;
+            }
+            return 0;
+    })
+}
     // const currentTableData = useMemo(() => {
     //     const firstPageIndex = (currentPage - 1) * pageSize;
     //     const lastPageIndex = firstPageIndex + pageSize;
     //     return database.slice(firstPageIndex, lastPageIndex);
     // }, [currentPage]);
+
+    const toggleSort = (key) => {
+        let direction = 'ascending';
+
+        if (sortConfig === null) {
+            setSortConfig({ key, direction});
+        }
+        if (sortConfig.key === key && sortConfig.direction === 'ascending') {
+            direction = 'descending';
+        }
+        setSortConfig({ key, direction});
+    }
+
+    const databaseToUse = sortConfig ? sortedDatabase : database;
 
     const defaultValue = "N/A";
     const [popupContents, setPopupContents] = useState("");
@@ -28,9 +56,9 @@ const Table = (props) => {
     return (
         <div role='document'>
             <table role='grid'>
-                <ColumnLabels />
+                <ColumnLabels toggleSort = {toggleSort}/>
                 <tbody>
-                    {database.map((r, index) => {
+                    {databaseToUse.map((r, index) => {
                         return (
                             <>
                                 <tr
