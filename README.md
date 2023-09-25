@@ -1,4 +1,4 @@
-# Codebase of Professor Adrien Zakar's GeoCistern Website
+# Codebase of Professor Adrien Zakar's Triangulations Website
 
 The goal of this project is to provide a visual display of entries from a database containing ancient Middle Eastern texts, maps, and atlases.
 
@@ -21,7 +21,7 @@ To run the project on your own computer, follow these steps:
 
 1. Clone the repository from GitHub:
 
-```git clone https://github.com/20LiamB/geocistern-repo.git ```
+```git clone https://github.com/triangulations123/Triangulations.git ```
 
 2. Navigate to the project
 
@@ -36,7 +36,13 @@ To run the project on your own computer, follow these steps:
 cd backend
 ./runDockerBackend.sh
 ```
+(You may need to create a network first:
 
+```
+docker network create geocistern
+```
+
+)
 
 5. Open a new terminal window and navigate to `frontend` folder and start the frontend using Docker:
 
