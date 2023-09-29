@@ -11,7 +11,8 @@ import {
     defaultDimensionValues,
 } from "./FilterUtils";
 import DoubleSlider from "./DoubleSlider";
-import './Style.css'
+import './Style.css';
+import './Left.css';
 
 
 const FilterBar = (props) => {
@@ -67,7 +68,7 @@ const FilterBar = (props) => {
     });
     return (
         <div className='grid'>
-            <div>
+            <div className="searchbar">
                 <SearchBar onChange={props.searchChange} />
             </div>
             <div className='headings'>
