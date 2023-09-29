@@ -42,6 +42,10 @@ const Table = (props) => {
     }
 
     const databaseToUse = sortConfig ? sortedDatabase : database;
+    const firstPageIndex = (currentPage - 1) * pageSize;
+    const lastPageIndex = firstPageIndex + pageSize;
+
+    const currentTableData = databaseToUse.slice(firstPageIndex, lastPageIndex);
 
     const defaultValue = "N/A";
     const [popupContents, setPopupContents] = useState("");
@@ -58,7 +62,7 @@ const Table = (props) => {
             <table role='grid'>
                 <ColumnLabels toggleSort = {toggleSort}/>
                 <tbody>
-                    {databaseToUse.map((r, index) => {
+                    {currentTableData.map((r, index) => {
                         return (
                             <>
                                 <tr
