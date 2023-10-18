@@ -1,5 +1,6 @@
 import { navData } from "./Navigation";
 import { useLocation } from "react-router-dom";
+import "./NavBar.css";
 
 export default function NavBar() {
     const location = useLocation();
@@ -9,8 +10,8 @@ export default function NavBar() {
             <ul>
                 <li>
                     <hgroup>
-                        <h1>Cistern</h1>
-                        <h6>University of Toronto</h6>
+                        <h1>Triangulations</h1>
+               
                     </hgroup>
                 </li>
             </ul>

@@ -15,3 +15,10 @@
     --switch-color: var(--primary-inverse);
     --switch-checked-background-color: var(--primary);
 }
+
+main.container > div {
+    display: flex;
+    flex-direction: row;
+    margin-left: -9.2rem;
+    
+}
