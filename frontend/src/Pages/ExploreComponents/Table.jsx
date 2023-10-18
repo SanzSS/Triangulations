@@ -2,11 +2,12 @@ import React, { useState, useMemo } from "react";
 import Pagination from "./Pagination";
 import Popup from "./Popup";
 import ColumnLabels from "./ColumnLabels";
+import "../ExploreStyles/DisplayTable.css";
 
 const Table = (props) => {
     const database = props.database;
 
-    let pageSize = 15;
+    let pageSize = 30;
     const [currentPage, setCurrentPage] = useState(1);
     const [sortConfig, setSortConfig] = useState(null);
 
