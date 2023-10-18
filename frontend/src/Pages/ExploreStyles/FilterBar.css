@@ -1,0 +1,36 @@
+.grid {
+    display: flex;
+    flex-direction: column;
+    /* position: fixed;
+    right: 1350px;
+    top: 50px; */
+    /* margin-top: 7rem; */
+    margin-right: 1rem;
+    
+}
+
+.searchbar {
+    width: 150px;
+}
+
+.headings {
+    width: 150px;
+}
+
+/* #date {
+    color: #3949ab;
+    font-size: large;
+} */
+
+select {
+    border: 0.1rem solid black;
+    color: black;
+}
+
+small {
+    color: black;
+}
+
+input::placeholder {
+    color: black;
+}
