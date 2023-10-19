@@ -15,7 +15,6 @@ export default function Explore() {
 
     // Search functionality
     const [searchQuery, setSearchQuery] = useState("");
-
     // Search function -- Todo: Make the fuzzyQuery fuzzier
     const searchDatabase = (data) => {
         const fuzzyQuery = searchQuery.toLowerCase();

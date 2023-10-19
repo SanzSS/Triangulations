@@ -11,8 +11,7 @@ import {
     defaultDimensionValues,
 } from "./FilterUtils";
 import DoubleSlider from "./DoubleSlider";
-import './Style.css';
-import './Left.css';
+import '../ExploreStyles/FilterBar.css';
 
 
 const FilterBar = (props) => {
