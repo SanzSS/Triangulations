@@ -2,3 +2,23 @@ tr {
     border: 0.2rem solid #302718;
     border-radius: 0.5rem;
 }
+
+td {
+    color: black;
+}
+
+th {
+    color: black;
+}
+
+th:hover {
+    color: white;
+}
+
+tr.row-item {
+    background-color: white;
+}
+
+tr.row-item:hover {
+    background-color: #ded2a8;
+}

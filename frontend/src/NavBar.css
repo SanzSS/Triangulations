@@ -1,0 +1,13 @@
+h1#\#heading {
+    font-size: 2rem;
+    color: black;
+}
+
+a {
+    color: black;
+}
+
+a:hover {
+    color: white;
+
+}

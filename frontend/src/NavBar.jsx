@@ -10,7 +10,7 @@ export default function NavBar() {
             <ul>
                 <li>
                     <hgroup>
-                        <h1>Triangulations</h1>
+                        <h1 id="#heading">Triangulations</h1>
                
                     </hgroup>
                 </li>

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
+import "../ExploreStyles/DoubleSlider.css"
 
 const DoubleSlider = ({ min, max, step, defaultValue, onChange }) => {
     const [bounds, setBounds] = useState(defaultValue || [min, max]);
