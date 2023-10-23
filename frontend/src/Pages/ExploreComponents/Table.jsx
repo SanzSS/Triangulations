@@ -60,7 +60,8 @@ const Table = (props) => {
     };
     return (
         <div role='document'>
-            <table role='grid'>
+            <table > 
+            {/* removed role='grid' from table tag */}
                 <ColumnLabels toggleSort = {toggleSort}/>
                 <tbody>
                     {currentTableData.map((r, index) => {
