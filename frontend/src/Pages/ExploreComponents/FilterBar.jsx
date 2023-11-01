@@ -152,7 +152,7 @@ const FilterBar = (props) => {
                     </ul>
                 </details> */}
             </div>
-            <div className='headings'>
+            {/* <div className='headings'>
                 <small>Date:</small>
                 <div><small id="date">{defaultDateValues[0].toString() + ' AH' + ' - ' + defaultDateValues[1].toString() + ' AH'}</small></div>
                 <DoubleSlider
@@ -164,7 +164,7 @@ const FilterBar = (props) => {
                         document.getElementById('date').innerText = bounds[0].toString() + ' AH' + ' - ' + bounds[1].toString() + ' AH';}
                     }
                 />
-            </div>
+            </div> */}
             <div className='headings'>
                 <legend>Calendar:</legend>
                 <div>
@@ -173,9 +173,11 @@ const FilterBar = (props) => {
                 </div>
             </div>
             <form className="headings" onSubmit={handleSubmit}>
+                <p>Start:</p>
                <input type="number" value={number1} required onChange={(e) => setNumber1(parseInt(e.target.value))}></input>
+               <p>End:</p>
                <input type="number" value={number2} required onChange={(e) => setNumber2(parseInt(e.target.value))}></input>
-               <input type="submit" value="Apply"></input>
+               <input type="submit" value="Apply" className="submit"></input>
                 </form>
             <div className='headings'>
                 <small>Dimensions:</small>
