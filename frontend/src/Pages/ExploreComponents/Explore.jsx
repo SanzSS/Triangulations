@@ -73,9 +73,10 @@ export default function Explore() {
             // }
             // let date = database.indexOf(row["titleOriginal"]).normalizedDate;
             let date = normalizedDate(row["date"]);
-            if (date < dateFilter[0] || date > dateFilter[1]) {
+            if (date < dateFilter[0] || date > dateFilter[1] || dateFilter[0] > dateFilter[1]) {
                 return false;
             }
+            console.log(dateFilter[0], dateFilter[1], date);
             // TODO (dimension filter)
             // What we will do is use a single dimension slider and represent a large square and small square
             // with the values of this slider. Using the areas of these squares, we can come up with a upper

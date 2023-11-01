@@ -19,6 +19,11 @@ const FilterBar = (props) => {
     const handleTypeFilterChange = (e) => {
         setTypeFilter(e.target.value);
     };
+    const [number1, setNumber1] = useState(null);
+    const [number2, setNumber2] = useState(null);
+    const handleSubmit = () => {
+        setDateFilter([number1, number2]);
+    };
 
     const [languageFilter, setLanguageFilter] = useState(null);
     const handleLanguageFilterChange = (e) => {
@@ -160,6 +165,18 @@ const FilterBar = (props) => {
                     }
                 />
             </div>
+            <div className='headings'>
+                <legend>Calendar:</legend>
+                <div>
+                    <input type="radio" id="hijri" checked name="calendar" value="hijri" />
+                    <label for="hijri">Hijri</label>
+                </div>
+            </div>
+            <form className="headings" onSubmit={handleSubmit}>
+               <input type="number" value={number1} required onChange={(e) => setNumber1(parseInt(e.target.value))}></input>
+               <input type="number" value={number2} required onChange={(e) => setNumber2(parseInt(e.target.value))}></input>
+               <input type="submit" value="Apply"></input>
+                </form>
             <div className='headings'>
                 <small>Dimensions:</small>
                 <DoubleSlider
