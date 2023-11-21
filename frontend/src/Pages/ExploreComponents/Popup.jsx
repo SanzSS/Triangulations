@@ -8,28 +8,33 @@ const Popup = (props) => {
     //         props.handleClose;
     //     }
     // });
+    const handlePopupClose = () => {
+        props.handleClose(props.id);
+    }
     return (
         // <div className='popup-box'>
         //     <div className='box'>
         //         <span className='close-icon' onClick={props.handleClose}>
         //             x
         //         </span>
-                <dialog open>
+                // <dialog open>
+        <div className="popup">
             <article>
                 <header>
+                    More info
                     <a
                         href='#close'
                         aria-label='Close'
                         class='close'
-                        onClick={props.handleClose}
-                    ></a>
-                    More info
+                        onClick={handlePopupClose}
+                    >x</a>
+                    
                 </header>
                 {props.content}
             {/* </div>
         </div> */}
           </article>
-        </dialog>
+        </div>
     );
 };
 

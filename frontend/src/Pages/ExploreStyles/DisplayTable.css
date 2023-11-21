@@ -22,3 +22,9 @@ tr.row-item {
 tr.row-item:hover {
     background-color: #ded2a8;
 }
+
+.popups {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}

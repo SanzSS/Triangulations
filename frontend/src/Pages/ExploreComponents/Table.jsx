@@ -49,14 +49,27 @@ const Table = (props) => {
     const currentTableData = databaseToUse.slice(firstPageIndex, lastPageIndex);
 
     const defaultValue = "N/A";
-    const [popupContents, setPopupContents] = useState("");
+    const [popupContents, setPopupContents] = useState([]);
     const [isPopupOpen, setIsPopupOpen] = useState(false);
-    const togglePopup = (index) => {
+    const closePopup = (index) => {
         console.log(index, database[index]);
-        if (!isPopupOpen) {
-            setPopupContents(database[index]);
+        setPopupContents((prevPopupContents) => {
+           return prevPopupContents.filter((_, i) => i !== index);
         }
-        setIsPopupOpen(!isPopupOpen);
+        );
+        
+    };
+
+    const togglePopupRow = (index) => {
+        console.log(index, database[index]);
+        if (!popupContents.includes(database[index])) {
+        setPopupContents((prevPopupContents) => {
+            return [...prevPopupContents, database[index]];
+        } );
+    }
+        if (!isPopupOpen) {
+            setIsPopupOpen(!isPopupOpen);
+        } 
     };
     return (
         <div role='document'>
@@ -70,7 +83,7 @@ const Table = (props) => {
                                 <tr
                                     className='row-item'
                                     key={index}
-                                    onClick={() => togglePopup(index)}
+                                    onClick={() => togglePopupRow(index)}
                                 >
                                     <td>
                                         {r.authorNameOriginal
@@ -106,47 +119,50 @@ const Table = (props) => {
                     })}
                 </tbody>
             </table>
-            {isPopupOpen && (
+            <div className="popups">
+            {isPopupOpen && popupContents.map((content, index) =>(
                 <Popup
+                id = {index}
                     content={
                         <>
                             <b>Additional Details</b>
                             <p>
                                 Original location:{" "}
-                                {popupContents.originalLocation
-                                    ? popupContents.originalLocation
+                                {content.originalLocation
+                                    ? content.originalLocation
                                     : ""}{" "}
                                 <br />
                                 Publisher:{" "}
-                                {popupContents.publisher
-                                    ? popupContents.publisher
+                                {content.publisher
+                                    ? content.publisher
                                     : ""}{" "}
                                 <br />
                                 Script:{" "}
-                                {popupContents.script
-                                    ? popupContents.script
+                                {content.script
+                                    ? content.script
                                     : ""}{" "}
                                 <br />
                                 Page count:{" "}
-                                {popupContents.pageCount
-                                    ? popupContents.pageCount
+                                {content.pageCount
+                                    ? content.pageCount
                                     : ""}{" "}
                                 <br />
                                 Dimensions:{" "}
-                                {popupContents.dimensions
-                                    ? popupContents.dimensions
+                                {content.dimensions
+                                    ? content.dimensions
                                     : ""}{" "}
                                 <br />
                                 Additional information:{" "}
-                                {popupContents.additionalInfo
-                                    ? popupContents.additionalInfo
+                                {content.additionalInfo
+                                    ? content.additionalInfo
                                     : ""}
                             </p>
                         </>
                     }
-                    handleClose={togglePopup}
+                    handleClose={closePopup}
                 />
-            )}
+            ))}
+            </div>
             <Pagination
                 className='pagination-bar'
                 currentPage={currentPage}
@@ -154,6 +170,7 @@ const Table = (props) => {
                 pageSize={pageSize}
                 onPageChange={(page) => setCurrentPage(page)}
             />
+        
         </div>
     );
 };

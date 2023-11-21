@@ -34,3 +34,19 @@ small {
 input::placeholder {
     color: black;
 }
+
+input.submit {
+    color: black;
+}
+
+label {
+    color:black;
+}
+
+p {
+    color: black;
+}
+
+legend{
+    color: black;
+}
