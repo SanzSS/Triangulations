@@ -9,6 +9,7 @@ import {
     genreFilterKeys,
     defaultDateValues,
     defaultDimensionValues,
+    dimensionFilterKeys
 } from "./FilterUtils";
 import DoubleSlider from "./DoubleSlider";
 import '../ExploreStyles/FilterBar.css';
@@ -29,6 +30,12 @@ const FilterBar = (props) => {
     const handleLanguageFilterChange = (e) => {
         setLanguageFilter(e.target.value);
     };
+
+    const {calendarType, onCalendarTypeChange} = props;
+    const handleCalendarTypeChange = (e) => {
+        setCalendarType(e.target.value);
+        onCalendarTypeChange(e.target.value);
+    }
 
     const [scriptFilter, setScriptFilter] = useState(null);
     const handleScriptFilterChange = (e) => {
@@ -53,13 +60,18 @@ const FilterBar = (props) => {
         setDateFilter(bounds);
     };
 
-    const [dimensionFilter, setDimensionFilter] = useState(
-        defaultDimensionValues
-    );
-    const handleDimensionFilterChange = (bounds) => {
-        console.log(bounds);
-        setDimensionFilter(bounds);
-    };
+    const [dimensionFilter, setDimensionFilter] = useState(null);
+    const handleDimensionFilterChange = (e) => {
+        setDimensionFilter(e.target.value);
+    }
+
+    // const [dimensionFilter, setDimensionFilter] = useState(
+    //     defaultDimensionValues
+    // );
+    // const handleDimensionFilterChange = (bounds) => {
+    //     console.log(bounds);
+    //     setDimensionFilter(bounds);
+    // };
 
     // Handles the lag in asynchronous function setState()
     useEffect(() => {
@@ -168,8 +180,26 @@ const FilterBar = (props) => {
             <div className='headings'>
                 <legend>Calendar:</legend>
                 <div>
-                    <input type="radio" id="hijri" checked name="calendar" value="hijri" />
-                    <label for="hijri">Hijri</label>
+                    <input
+                        type="radio"
+                        id="hijri"
+                        checked={calendarType === "hijri"}
+                        name="calendar"
+                        value="hijri"
+                        onChange={handleCalendarTypeChange}
+                    />
+                    <label htmlFor="hijri">Hijri</label>
+                </div>
+                <div>
+                    <input
+                        type="radio"
+                        id="gregorian"
+                        checked={calendarType === "gregorian"}
+                        name="calendar"
+                        value="gregorian"
+                        onChange={handleCalendarTypeChange}
+                    />
+                    <label htmlFor="gregorian">Gregorian</label>
                 </div>
             </div>
             <form className="headings" onSubmit={handleSubmit}>
@@ -180,14 +210,15 @@ const FilterBar = (props) => {
                <input type="submit" value="Apply" className="submit"></input>
                 </form>
             <div className='headings'>
-                <small>Dimensions:</small>
-                <DoubleSlider
-                    min={defaultDimensionValues[0]}
-                    max={defaultDimensionValues[1]}
-                    step={1}
-                    defaultValue={defaultDimensionValues}
-                    onChange={(bounds) => handleDimensionFilterChange(bounds)}
-                />
+            <small>Dimension:</small>
+                <select id='type' required onChange={handleDimensionFilterChange}>
+                    <option value={null} selected>
+                        All
+                    </option>
+                    {dimensionFilterKeys.map((key) => {
+                        return <option value={key}>{key}</option>;
+                    })}
+                </select>
             </div>
         </div>
     );

@@ -6,7 +6,7 @@ import Table from "./Table";
 import { searchKeys } from "./FilterUtils";
 import { dataTable } from "./TestDataSet";
 
-export default function Explore() {
+export default function Explore(props) {
     const [database, setDatabase] = useState([]);
 
     useEffect(() => {
@@ -24,6 +24,7 @@ export default function Explore() {
             )
         );
     };
+    
 
     const filterData = (data) => {
         return searchDatabase(data).filter((row) => {
@@ -36,6 +37,17 @@ export default function Explore() {
             ) {
                 return false;
             }
+            
+            if (
+                dimensionFilter &&
+                dimensionFilter !== "All" &&
+                row["dimensionLabel"]
+                    .toLowerCase()
+                    !==dimensionFilter.toLowerCase()
+            ) {
+                return false;
+            }
+
             if (
                 languageFilter &&
                 languageFilter !== "All" &&
@@ -72,7 +84,8 @@ export default function Explore() {
             //     return false;
             // }
             // let date = database.indexOf(row["titleOriginal"]).normalizedDate;
-            let date = normalizedDate(row["date"]);
+            let dateField = calendarType ==="hijri" ? row["date"] : row["date_ce"];
+            let date = parseInt(dateField);
             if (date < dateFilter[0] || date > dateFilter[1] || dateFilter[0] > dateFilter[1]) {
                 return false;
             }
@@ -92,6 +105,7 @@ export default function Explore() {
     const [genreFilter, setGenreFilter] = useState([]);
     const [dateFilter, setDateFilter] = useState([]);
     const [dimensionFilter, setDimensionFilter] = useState([]);
+    const [calendarType, setCalendarType] = useState("hijri");
 
     return (
         <div>
@@ -109,21 +123,23 @@ export default function Explore() {
                 filterByDimension={(dimensionFilter) =>
                     setDimensionFilter(dimensionFilter)
                 }
+                calendarType={calendarType}
+                onCalendarTypeChange={(calendarType) => setCalendarType(calendarType)}
             />
             <Table database={filterData(database)}></Table>
         </div>
     );
 }
 
-function normalizedDate(date) {
-    if (date[0] === "~"){
-        return Number(date.slice(1, 5));
-    }
-    if (date[0] === "["){
-        return 0;
-    }
-    if (date[3] === " "){
-        return Number(date.slice(0, 4));
-    }
-    return Number(date.slice(0, 5));
-}
+// function normalizedDate(date) {
+//     if (date[0] === "~"){
+//         return Number(date.slice(1, 5));
+//     }
+//     if (date[0] === "["){
+//         return 0;
+//     }
+//     if (date[3] === " "){
+//         return Number(date.slice(0, 4));
+//     }
+//     return Number(date.slice(0, 5));
+// }

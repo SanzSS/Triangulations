@@ -105,6 +105,17 @@ class ColumnLabels extends Component {
                     >
                         Date
                     </th>
+                    <th
+                        class='sorting'
+                        tabIndex='0'
+                        rowSpan='1'
+                        colSpan='1'
+                        aria-label='DIMENSION LABEL: activate to sort column ascending'
+                        onClick={() => {toggleSort('label')}}
+
+                    >
+                        Dimension Label
+                    </th>
                 </tr>
             </thead>
         );
