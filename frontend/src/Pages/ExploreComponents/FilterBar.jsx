@@ -34,7 +34,7 @@ const FilterBar = (props) => {
 
     const {calendarType, onCalendarTypeChange} = props;
     const handleCalendarTypeChange = (e) => {
-        setCalendarType(e.target.value);
+        // setCalendarType(e.target.value);
         onCalendarTypeChange(e.target.value);
     }
 

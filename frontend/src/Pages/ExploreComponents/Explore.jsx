@@ -9,12 +9,12 @@ import { dataTable } from "./TestDataSet";
 
 
 export default function Explore(props) {
-    const [database, setDatabase] = useState(dataTable);
+    const [database, setDatabase] = useState([]);
     
 
-    // useEffect(() => {
-    //     axios.get("/api").then((res) => setDatabase(res.data));
-    // }, []);
+    useEffect(() => {
+        axios.get("/api").then((res) => setDatabase(res.data));
+    }, []);
 
     // Search functionality
     const [searchQuery, setSearchQuery] = useState("");
