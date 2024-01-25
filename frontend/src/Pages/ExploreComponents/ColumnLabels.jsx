@@ -19,9 +19,9 @@ class ColumnLabels extends Component {
     // }
         return (
           <thead>
-            <tr className="header-footer ">
+            <tr class="header-footer">
               <th
-                className="sorting text-[14px]"
+                class="sorting text-[14px]"
                 tabIndex="0"
                 rowSpan="1"
                 colSpan="1"
@@ -33,7 +33,7 @@ class ColumnLabels extends Component {
                 Author Name (Original Language)
               </th>
               <th
-                className="sorting text-[14px]"
+                class="sorting text-[14px]"
                 tabIndex="1"
                 rowSpan="1"
                 colSpan="1"
@@ -42,10 +42,10 @@ class ColumnLabels extends Component {
                   toggleSort("authorNameTranslit");
                 }}
               >
-                Author Name 
+                Author Name (Transliteration)
               </th>
               <th
-                className="sorting text-[14px]"
+                class="sorting text-[14px]"
                 tabIndex="0"
                 rowSpan="1"
                 colSpan="1"
@@ -57,7 +57,7 @@ class ColumnLabels extends Component {
                 Title of Work (Original Language)
               </th>
               <th
-                className="sorting text-[14px]"
+                class="sorting text-[14px]"
                 tabIndex="0"
                 rowSpan="1"
                 colSpan="1"
@@ -66,10 +66,10 @@ class ColumnLabels extends Component {
                   toggleSort("titleTranslit");
                 }}
               >
-                Title of Work
+                Title of Work (Transliteration)
               </th>
               <th
-                className="sorting text-[14px]"
+                class="sorting text-[14px]"
                 tabIndex="0"
                 rowSpan="1"
                 colSpan="1"
@@ -81,7 +81,7 @@ class ColumnLabels extends Component {
                 Language
               </th>
               <th
-                className="sorting text-[14px]"
+                class="sorting text-[14px]"
                 tabIndex="0"
                 rowSpan="1"
                 colSpan="1"
@@ -93,7 +93,7 @@ class ColumnLabels extends Component {
                 Genre
               </th>
               <th
-                className="sorting text-[14px]"
+                class="sorting text-[14px]"
                 tabIndex="0"
                 rowSpan="1"
                 colSpan="1"
@@ -105,7 +105,7 @@ class ColumnLabels extends Component {
                 Type
               </th>
               <th
-                className="sorting text-[14px]"
+                class="sorting text-[14px]"
                 tabIndex="0"
                 rowSpan="1"
                 colSpan="1"
@@ -115,6 +115,18 @@ class ColumnLabels extends Component {
                 }}
               >
                 Date
+              </th>
+              <th
+                class="sorting text-[14px]"
+                tabIndex="0"
+                rowSpan="1"
+                colSpan="1"
+                aria-label="DIMENSION LABEL: activate to sort column ascending"
+                onClick={() => {
+                  toggleSort("label");
+                }}
+              >
+                Dimension Label
               </th>
             </tr>
           </thead>

@@ -99,55 +99,58 @@ const Table = (props) => {
             {currentTableData.map((r, index) => {
               let color = " bg-[#B1A296]";
 
-            //TODO - Highlighted row should stay highlighted when changing pages/rerendering/reloading.
-          
-              if (popupContents.includes(database[index])){
-                  color = " bg-[#2779a7]";
+              //TODO - Highlighted row should stay highlighted when changing pages/rerendering/reloading.
+
+              if (popupContents.includes(database[index])) {
+                color = " bg-[#2779a7]";
               }
-                return (
-                  <>
-                    <tr
-                      className={
-                        "row-item  hover:bg-[#2779a7] hover:cursor-pointer" +
-                        color
-                      }
-                      key={index}
-                      onClick={() => {
-                        togglePopupRow(index);
-                        handleRowClick(index, r);
-                      }}
-                    >
-                      <td className="text-[14px]">
-                        {r.authorNameOriginal
-                          ? r.authorNameOriginal
-                          : defaultValue}
-                      </td>
-                      <td className="text-[14px]">
-                        {r.authorNameTranslit
-                          ? r.authorNameTranslit
-                          : defaultValue}
-                      </td>
-                      <td className="text-[14px]">
-                        {r.titleOriginal ? r.titleOriginal : defaultValue}
-                      </td>
-                      <td className="text-[14px]">
-                        {r.titleTranslit ? r.titleTranslit : defaultValue}
-                      </td>
-                      <td className="text-[14px]">
-                        {r.language ? r.language : defaultValue}
-                      </td>
-                      <td className="text-[14px]">
-                        {r.genre ? r.genre : defaultValue}
-                      </td>
-                      <td className="text-[14px]">
-                        {r.textType ? r.textType : defaultValue}
-                      </td>
-                      <td className="text-[14px]">
-                        {r.date ? r.date : defaultValue}
-                      </td>
-                    </tr>
-                  </>
-                );
+              return (
+                <>
+                  <tr
+                    className={
+                      "row-item  hover:bg-[#2779a7] hover:cursor-pointer" +
+                      color
+                    }
+                    key={index}
+                    onClick={() => {
+                      togglePopupRow(index);
+                      handleRowClick(index, r);
+                    }}
+                  >
+                    <td className="text-[14px]">
+                      {r.authorNameOriginal
+                        ? r.authorNameOriginal
+                        : defaultValue}
+                    </td>
+                    <td className="text-[14px]">
+                      {r.authorNameTranslit
+                        ? r.authorNameTranslit
+                        : defaultValue}
+                    </td>
+                    <td className="text-[14px]">
+                      {r.titleOriginal ? r.titleOriginal : defaultValue}
+                    </td>
+                    <td className="text-[14px]">
+                      {r.titleTranslit ? r.titleTranslit : defaultValue}
+                    </td>
+                    <td className="text-[14px]">
+                      {r.language ? r.language : defaultValue}
+                    </td>
+                    <td className="text-[14px]">
+                      {r.genre ? r.genre : defaultValue}
+                    </td>
+                    <td className="text-[14px]">
+                      {r.textType ? r.textType : defaultValue}
+                    </td>
+                    <td className="text-[14px]">
+                      {r.date ? r.date : defaultValue}
+                    </td>
+                    <td className="text-[14px]">
+                      {r.date ? r.date : defaultValue}
+                    </td>
+                  </tr>
+                </>
+              );
             })}
           </tbody>
         </table>

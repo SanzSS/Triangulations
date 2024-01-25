@@ -9,6 +9,7 @@ import {
     genreFilterKeys,
     defaultDateValues,
     defaultDimensionValues,
+    dimensionFilterKeys
 } from "./FilterUtils";
 import DoubleSlider from "./DoubleSlider";
 import '../ExploreStyles/FilterBar.css';
@@ -30,6 +31,12 @@ const FilterBar = (props) => {
     const handleLanguageFilterChange = (e) => {
         setLanguageFilter(e.target.value);
     };
+
+    const {calendarType, onCalendarTypeChange} = props;
+    const handleCalendarTypeChange = (e) => {
+        setCalendarType(e.target.value);
+        onCalendarTypeChange(e.target.value);
+    }
 
     const [scriptFilter, setScriptFilter] = useState(null);
     const handleScriptFilterChange = (e) => {
@@ -54,13 +61,18 @@ const FilterBar = (props) => {
         setDateFilter(bounds);
     };
 
-    const [dimensionFilter, setDimensionFilter] = useState(
-        defaultDimensionValues
-    );
-    const handleDimensionFilterChange = (bounds) => {
-        console.log(bounds);
-        setDimensionFilter(bounds);
-    };
+    const [dimensionFilter, setDimensionFilter] = useState(null);
+    const handleDimensionFilterChange = (e) => {
+        setDimensionFilter(e.target.value);
+    }
+
+    // const [dimensionFilter, setDimensionFilter] = useState(
+    //     defaultDimensionValues
+    // );
+    // const handleDimensionFilterChange = (bounds) => {
+    //     console.log(bounds);
+    //     setDimensionFilter(bounds);
+    // };
 
     // Handles the lag in asynchronous function setState()
     useEffect(() => {
@@ -73,11 +85,10 @@ const FilterBar = (props) => {
     });
     return (
       <div className="grid font items-end">
-        
-          <div className="flex flex-col">
-            <small className="text-[14px]">Search:</small>
-            <SearchBar onChange={props.searchChange} />
-          </div>
+        <div className="flex flex-col">
+          <small className="text-[14px]">Search:</small>
+          <SearchBar onChange={props.searchChange} />
+        </div>
         <div className="flex flex-col">
           <small className="text-[14px]">Type:</small>
           <select
@@ -176,7 +187,6 @@ const FilterBar = (props) => {
                     }
                 />
             </div> */}
-
         <div className="mb-[19px]">
           <legend className="text-[14px]">Calendar:</legend>
           <div className="join join-vertical">
@@ -187,12 +197,14 @@ const FilterBar = (props) => {
               className="join-item btn  btn-xs input btn-outline input-bordered border-black bg-inherit"
               name="options"
               aria-label="Hijiri"
+              onChange={handleCalendarTypeChange}
             />
             <input
               type="radio"
               className="join-item btn btn-xs btn-outline input input-bordered border-black bg-inherit"
               name="options"
               aria-label="CE"
+              onChange={handleCalendarTypeChange}
             />
             <input
               type="radio"
@@ -238,6 +250,16 @@ const FilterBar = (props) => {
             className="submit !btn !btn-xs !btn-outline !text-[12px] mt-2 !mb-0"
           ></input>
         </form>
+        <div className="headings">
+          <small>Dimensions:</small>
+          <DoubleSlider
+            min={defaultDimensionValues[0]}
+            max={defaultDimensionValues[1]}
+            step={1}
+            defaultValue={defaultDimensionValues}
+            onChange={(bounds) => handleDimensionFilterChange(bounds)}
+          />
+        </div>
       </div>
     );
 };
