@@ -23,4 +23,9 @@ export const navData = [
         text: "People",
         link: "/people",
     },
+    {
+        id: 4,
+        text: "Sandpit",
+        link: "/sandpit",
+    },
 ];

@@ -1,20 +1,44 @@
+
+
 .grid {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     /* position: fixed;
     right: 1350px;
     top: 50px; */
     /* margin-top: 7rem; */
     margin-right: 1rem;
+    justify-content: center;
     
 }
 
-.searchbar {
-    width: 150px;
+.font {
+    font-family: 'Apercu Pro', sans-serif !important;
 }
 
-.headings {
-    width: 150px;
+::after {
+    font-size: 12px;
+}
+
+input[type="radio"] {
+    border-width: 1px !important;
+}
+
+input[type="submit"]{
+    width: 100px !important;
+    height: 20px !important;
+    padding: 1px !important;
+}
+
+
+.join-item {
+    width: 65px !important;
+}
+
+input[type="number"] {
+    margin-bottom: 0;
+    width: 100px;
+    height: 31px;
 }
 
 /* #date {
@@ -23,8 +47,8 @@
 } */
 
 select {
-    border: 0.1rem solid black;
     color: black;
+    font-size: 12px;
 }
 
 small {

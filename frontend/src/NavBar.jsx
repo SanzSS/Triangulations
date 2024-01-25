@@ -6,11 +6,11 @@ export default function NavBar() {
     const location = useLocation();
 
     return (
-        <nav className='navBar-container'>
+        <nav className='navBar-container px-[2rem] mb-[2rem]'>
             <ul>
                 <li>
                     <hgroup>
-                        <h1 id="#heading">Triangulations</h1>
+                        <h1 id="#heading" className="font">Triangulations</h1>
                
                     </hgroup>
                 </li>
@@ -19,7 +19,7 @@ export default function NavBar() {
                 {navData.map((item) => {
                     return (
                         <li id={item.id}>
-                            <a href={item.link}>{item.text}</a>
+                            <a href={item.link} className="font">{item.text}</a>
                         </li>
                     );
                 })}

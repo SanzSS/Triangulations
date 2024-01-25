@@ -1,6 +1,8 @@
 import React from "react";
 import "../ExploreStyles/Popup.css";
 
+
+
 const Popup = (props) => {
     // const handleKeyPress = document.addEventListener("keyup", function (e) {
     //     if (e.key === "Escape") {
@@ -8,6 +10,7 @@ const Popup = (props) => {
     //         props.handleClose;
     //     }
     // });
+
     const handlePopupClose = () => {
         props.handleClose(props.id);
     }
@@ -25,7 +28,7 @@ const Popup = (props) => {
                     <a
                         href='#close'
                         aria-label='Close'
-                        class='close'
+                        className='close'
                         onClick={handlePopupClose}
                     >x</a>
                     

@@ -10,12 +10,13 @@ const SearchBar = (props) => {
     props.onChange(searchQuery);
 
     return (
-        <input
-            type='search'
-            placeholder='Search...'
-            value={searchQuery}
-            onChange={handleSearchChange}
-        />
+      <input
+        type="search"
+        className="input text-[12px] input-bordered border-black bg-inherit"
+        placeholder="..."
+        value={searchQuery}
+        onChange={handleSearchChange}
+      />
     );
 };
 

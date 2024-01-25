@@ -1,6 +1,6 @@
 tr {
-    border: 0.2rem solid #302718;
-    border-radius: 0.5rem;
+    border: 0.11rem solid #302718;
+    border-radius: 2rem;
 }
 
 td {
@@ -9,22 +9,18 @@ td {
 
 th {
     color: black;
+    border-bottom: 0.1rem solid #302718;
 }
 
 th:hover {
-    color: white;
+    color: #7395AE;
 }
 
-tr.row-item {
-    background-color: white;
-}
 
-tr.row-item:hover {
-    background-color: #ded2a8;
-}
 
 .popups {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
 }
+

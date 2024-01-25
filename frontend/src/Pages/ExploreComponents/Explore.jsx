@@ -2,16 +2,19 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import FilterBar from "./FilterBar";
 import Table from "./Table";
-// import { dataTable } from "./TestDataSet";
+
 import { searchKeys } from "./FilterUtils";
 import { dataTable } from "./TestDataSet";
 
-export default function Explore() {
-    const [database, setDatabase] = useState([]);
 
-    useEffect(() => {
-        axios.get("/api").then((res) => setDatabase(res.data));
-    }, []);
+
+export default function Explore() {
+    const [database, setDatabase] = useState(dataTable);
+    
+
+    // useEffect(() => {
+    //     axios.get("/api").then((res) => setDatabase(res.data));
+    // }, []);
 
     // Search functionality
     const [searchQuery, setSearchQuery] = useState("");
@@ -73,7 +76,7 @@ export default function Explore() {
             // }
             // let date = database.indexOf(row["titleOriginal"]).normalizedDate;
             let date = normalizedDate(row["date"]);
-            if (date < dateFilter[0] || date > dateFilter[1] || dateFilter[0] > dateFilter[1]) {
+            if (date < dateFilter[0] || date > dateFilter[1] || dateFilter[0] > dateFilter[1] || dateFilter[0] < 0 || dateFilter[1] < 0) {
                 return false;
             }
             console.log(dateFilter[0], dateFilter[1], date);
@@ -84,6 +87,7 @@ export default function Explore() {
             // represented by the row must be more than the lower bound and less than the upper bound.
             return true;
         });
+        
     };
 
     const [typeFilter, setTypeFilter] = useState(null);
@@ -94,7 +98,7 @@ export default function Explore() {
     const [dimensionFilter, setDimensionFilter] = useState([]);
 
     return (
-        <div>
+        <div >
             <FilterBar
                 searchChange={(searchQuery) => setSearchQuery(searchQuery)}
                 filterByType={(typeFilter) => setTypeFilter(typeFilter)}
@@ -110,20 +114,28 @@ export default function Explore() {
                     setDimensionFilter(dimensionFilter)
                 }
             />
-            <Table database={filterData(database)}></Table>
+            <Table database={database}></Table> {/* filterData(database)}></Table> */}
         </div>
     );
 }
 
 function normalizedDate(date) {
-    if (date[0] === "~"){
-        return Number(date.slice(1, 5));
+    if (date.includes("[Not Provided]")) {
+        return -1;
+    } else {
+        const numbers = date.match(/[\d.]+/);
+        if (numbers === null) {
+            return -1;
+        }
+
+        const year = parseInt(numbers[0], 10);
+        
+        if (date.includes("AH")) {
+            return year;
+        } else if (date.includes("CE")) {
+            return Math.round((year - 622) * 1.03);
+        } else {
+            return -1;
+        }
     }
-    if (date[0] === "["){
-        return 0;
-    }
-    if (date[3] === " "){
-        return Number(date.slice(0, 4));
-    }
-    return Number(date.slice(0, 5));
 }
