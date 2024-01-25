@@ -130,7 +130,7 @@ export default function Explore(props) {
                 calendarType={calendarType}
                 onCalendarTypeChange={(calendarType) => setCalendarType(calendarType)}
             />
-            <Table database={database}></Table> {/* filterData(database)}></Table> */}
+            <Table database={filterData(database)}></Table> {/* filterData(database)}></Table> */}
         </div>
     );
 }
