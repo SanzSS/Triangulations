@@ -9,12 +9,12 @@ import { dataTable } from "./TestDataSet";
 
 
 export default function Explore() {
-    const [database, setDatabase] = useState(dataTable);
+    const [database, setDatabase] = useState([]);
     
 
-    // useEffect(() => {
-    //     axios.get("/api").then((res) => setDatabase(res.data));
-    // }, []);
+    useEffect(() => {
+        axios.get("/api").then((res) => setDatabase(res.data));
+    }, []);
 
     // Search functionality
     const [searchQuery, setSearchQuery] = useState("");
@@ -114,7 +114,7 @@ export default function Explore() {
                     setDimensionFilter(dimensionFilter)
                 }
             />
-            <Table database={database}></Table> {/* filterData(database)}></Table> */}
+            <Table database={filterData(database)}></Table> {/* filterData(database)}></Table> */}
         </div>
     );
 }
