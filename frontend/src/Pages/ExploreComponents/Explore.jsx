@@ -9,7 +9,7 @@ import { dataTable } from "./TestDataSet";
 
 
 export default function Explore() {
-    const [database, setDatabase] = useState([]);
+    const [database, setDatabase] = useState(dataTable);
     
 
     useEffect(() => {
@@ -75,7 +75,7 @@ export default function Explore() {
             //     return false;
             // }
             // let date = database.indexOf(row["titleOriginal"]).normalizedDate;
-            let date = normalizedDate(row["date"]);
+            let date = row["normalizedDate"];
             if (date < dateFilter[0] || date > dateFilter[1] || dateFilter[0] > dateFilter[1] || dateFilter[0] < 0 || dateFilter[1] < 0) {
                 return false;
             }

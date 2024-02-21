@@ -12,10 +12,10 @@ import Sandpit from "./Pages/SandpitComponents/Sandpit";
 function App() {
   return (
     <DataProvider>
-      <div className="App">
+      <div className="App min-h-[100vh]">
         {/* <div className="container"> */}
         <Header />
-        <main className="px-[2rem]">
+        <main className="px-[2rem] ">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/explore" element={<Explore />} />
