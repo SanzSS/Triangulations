@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { DataContext } from "../../DataContext";
 import "../SandpitStyles/Sandpit.css";
+import Draggable from "react-draggable";
+
 
 const Sandpit = () => {
   const [rows, setRow] = useState([]);
@@ -198,12 +200,17 @@ const Sandpit = () => {
       <div className="flex flex-row flex-wrap gap-[1rem]">
         {rows &&
           temp.map((row, index) => (
-            <div
-              className={"card card-bordered card-compact w-[10rem] bg-base-100 shadow-xl " + row[1]}
-              key={index}
-            >
-              {row[0]}
-            </div>
+            <Draggable>
+              <div
+                className={
+                  "card card-bordered card-compact w-[10rem] bg-base-100 shadow-xl " +
+                  row[1]
+                }
+                key={index}
+              >
+                {row[0]}
+              </div>
+            </Draggable>
           ))}
       </div>
     </div>
