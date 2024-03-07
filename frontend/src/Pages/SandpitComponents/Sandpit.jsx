@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { DataContext } from "../../DataContext";
 import "../SandpitStyles/Sandpit.css";
 import Draggable from "react-draggable";
 
-
 const Sandpit = () => {
   const [rows, setRow] = useState([]);
+  const componentRef = useRef();
 
   useEffect(() => {
     let temp = [];
@@ -47,8 +47,8 @@ const Sandpit = () => {
       color = "bg-red-500";
       text = "RED";
     }
-    temp.push(
-      [<div className={"card-body font "}>
+    temp.push([
+      <div className={"card-body font max-h-fit "}>
         <div className="flex justify-center">
           <div
             className={
@@ -66,13 +66,18 @@ const Sandpit = () => {
 
         <p className="text-[15px] font-bold mb-0">Additional Details</p>
         <p className="text-[14px] mb-0">
-          Original location: {row.originalLocation ? row.originalLocation : ""}{" "}
-          <br />
-          Publisher: {row.publisher ? row.publisher : ""} <br />
-          Script: {row.script ? row.script : ""} <br />
-          Page count: {row.pageCount ? row.pageCount : ""} <br />
-          Dimensions: {row.dimensions ? row.dimensions : ""} <br />
-          Additional information: {row.additionalInfo ? row.additionalInfo : ""}
+          <span className="font-bold">Original location: </span>
+          {row.originalLocation ? row.originalLocation : ""} <br />
+          <span className="font-bold"> Publisher:</span>{" "}
+          {row.publisher ? row.publisher : ""} <br />
+          <span className="font-bold">Script:</span>{" "}
+          {row.script ? row.script : ""} <br />
+          <span className="font-bold">Page count: </span>{" "}
+          {row.pageCount ? row.pageCount : ""} <br />
+          <span className="font-bold">Dimensions:</span>{" "}
+          {row.dimensions ? row.dimensions : ""} <br />
+          <span className="font-bold">Additional information: </span>
+          {row.additionalInfo ? row.additionalInfo : ""}
         </p>
         <div className="card-actions justify-evenly">
           <div className="dropdown">
@@ -126,19 +131,21 @@ const Sandpit = () => {
             Remove
           </button>
         </div>
-      </div>, hidden]
-    );
+      </div>,
+      hidden,
+    ]);
   });
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center" ref={componentRef}>
+      <h1 className="font mb-4">The Sandpit</h1>
       <div className="mb-2">
-        <legend className="text-[14px] font">Badge Filter:</legend>
+        <legend className="text-[14px] font font-bold">Badge Filter:</legend>
         <div className="join">
           <input
             type="radio"
             className={
-              "join-item btn btn-xs input btn-outline input-bordered border-black bg-inherit !m-0 !rounded-none"
+              "join-item btn btn-xs btn-outline input input-bordered border-black bg-inherit !m-0 !rounded-none"
             }
             name="options"
             aria-label="Orange"
@@ -154,7 +161,6 @@ const Sandpit = () => {
                   return item;
                 });
               });
-              console.log(rows);
             }}
           />
           <input
@@ -197,7 +203,7 @@ const Sandpit = () => {
           />
         </div>
       </div>
-      <div className="flex flex-row flex-wrap gap-[1rem]">
+      <div className="flex flex-row flex-wrap gap-[2.3rem] justify-center">
         {rows &&
           temp.map((row, index) => (
             <Draggable>

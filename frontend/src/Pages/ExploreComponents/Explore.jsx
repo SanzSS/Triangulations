@@ -8,9 +8,8 @@ import { dataTable } from "./TestDataSet";
 
 
 
-export default function Explore() {
-    const [database, setDatabase] = useState(dataTable);
-    
+export default function Explore(props) {
+    const [database, setDatabase] = useState([]);
 
     useEffect(() => {
         axios.get("/api").then((res) => setDatabase(res.data));
@@ -27,6 +26,7 @@ export default function Explore() {
             )
         );
     };
+    
 
     const filterData = (data) => {
         return searchDatabase(data).filter((row) => {
@@ -39,6 +39,17 @@ export default function Explore() {
             ) {
                 return false;
             }
+            
+            if (
+                dimensionFilter &&
+                dimensionFilter !== "All" &&
+                row["dimensionLabel"]
+                    .toLowerCase()
+                    !==dimensionFilter.toLowerCase()
+            ) {
+                return false;
+            }
+
             if (
                 languageFilter &&
                 languageFilter !== "All" &&
@@ -75,11 +86,14 @@ export default function Explore() {
             //     return false;
             // }
             // let date = database.indexOf(row["titleOriginal"]).normalizedDate;
-            let date = row["normalizedDate"];
-            if (date < dateFilter[0] || date > dateFilter[1] || dateFilter[0] > dateFilter[1] || dateFilter[0] < 0 || dateFilter[1] < 0) {
+   
+            let dateField = calendarType !== "Hijri" ? row["date_ce"] : row["date"];
+            let date = parseInt(dateField);
+            console.log(date);
+            if (date < dateFilter[0] || date > dateFilter[1] || dateFilter[0] > dateFilter[1]) {
                 return false;
             }
-            console.log(dateFilter[0], dateFilter[1], date);
+            
             // TODO (dimension filter)
             // What we will do is use a single dimension slider and represent a large square and small square
             // with the values of this slider. Using the areas of these squares, we can come up with a upper
@@ -95,47 +109,30 @@ export default function Explore() {
     const [scriptFilter, setScriptFilterKeys] = useState(null);
     const [genreFilter, setGenreFilter] = useState([]);
     const [dateFilter, setDateFilter] = useState([]);
-    const [dimensionFilter, setDimensionFilter] = useState([]);
+    const [dimensionFilter, setDimensionFilter] = useState("");
+    const [calendarType, setCalendarType] = useState("Hijri");
 
     return (
-        <div >
-            <FilterBar
-                searchChange={(searchQuery) => setSearchQuery(searchQuery)}
-                filterByType={(typeFilter) => setTypeFilter(typeFilter)}
-                filterByLanguage={(languageFilter) =>
-                    setLanguageFilterKeys(languageFilter)
-                }
-                filterByScript={(scriptFilter) =>
-                    setScriptFilterKeys(scriptFilter)
-                }
-                filterByGenre={(genreFilter) => setGenreFilter(genreFilter)}
-                filterByDate={(dateFilter) => setDateFilter(dateFilter)}
-                filterByDimension={(dimensionFilter) =>
-                    setDimensionFilter(dimensionFilter)
-                }
-            />
-            <Table database={filterData(database)}></Table> {/* filterData(database)}></Table> */}
-        </div>
+      <div>
+        <h1 className="font mb-4">Explore Our Collection!</h1>
+        <FilterBar
+          searchChange={(searchQuery) => setSearchQuery(searchQuery)}
+          filterByType={(typeFilter) => setTypeFilter(typeFilter)}
+          filterByLanguage={(languageFilter) =>
+            setLanguageFilterKeys(languageFilter)
+          }
+          filterByScript={(scriptFilter) => setScriptFilterKeys(scriptFilter)}
+          filterByGenre={(genreFilter) => setGenreFilter(genreFilter)}
+          filterByDate={(dateFilter) => setDateFilter(dateFilter)}
+          filterByDimension={(dimensionFilter) =>
+            setDimensionFilter(dimensionFilter)
+          }
+          calendarType={calendarType}
+          onCalendarTypeChange={(calendarType) => setCalendarType(calendarType)}
+        />
+        <Table database={filterData(database)}></Table>{" "}
+        {/* filterData(database)}></Table> */}
+      </div>
     );
 }
 
-function normalizedDate(date) {
-    if (date.includes("[Not Provided]")) {
-        return -1;
-    } else {
-        const numbers = date.match(/[\d.]+/);
-        if (numbers === null) {
-            return -1;
-        }
-
-        const year = parseInt(numbers[0], 10);
-        
-        if (date.includes("AH")) {
-            return year;
-        } else if (date.includes("CE")) {
-            return Math.round((year - 622) * 1.03);
-        } else {
-            return -1;
-        }
-    }
-}

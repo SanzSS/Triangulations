@@ -17,10 +17,19 @@ const Table = (props) => {
   if (sortConfig !== null) {
     sortedDatabase = [...database].sort((a, b) => {
       const key = sortConfig.key;
-      if (a[key] < b[key]) {
+      let first = '';
+      let second = '';
+      if (key === "date") {
+        first = parseInt(a[key]);
+        second = parseInt(b[key]);
+      } else { 
+        first = a[key];
+        second = b[key];
+      }
+      if (first < second) {
         return sortConfig.direction === "ascending" ? -1 : 1;
       }
-      if (a[key] > b[key]) {
+      if (first > second) {
         return sortConfig.direction === "ascending" ? 1 : -1;
       }
       return 0;
@@ -83,16 +92,13 @@ const Table = (props) => {
   const togglePopupRow = (index) => {
     console.log(index, database[index]);
 
-    if (
-      !popupContents.includes(JSON.stringify(database[index]))
-    ) {
+    if (!popupContents.includes(JSON.stringify(database[index]))) {
       setPopupContents((prevPopupContents) => {
         console.log([...prevPopupContents, JSON.stringify(database[index])]);
         return [...prevPopupContents, JSON.stringify(database[index])];
       });
     } else {
-        closePopup(popupContents.indexOf(JSON.stringify(database[index])));
-      
+      closePopup(popupContents.indexOf(JSON.stringify(database[index])));
     }
     if (!isPopupOpen) {
       setIsPopupOpen(!isPopupOpen);
@@ -151,49 +157,16 @@ const Table = (props) => {
                   <td className="text-[14px]">
                     {r.date ? r.date : defaultValue}
                   </td>
+                  <td className="text-[14px]">
+                    {r.dimensionLabel ? r.dimensionLabel : defaultValue}
+                  </td>
                 </tr>
               </>
             );
           })}
         </tbody>
       </table>
-      <div className="popups">
-        {false &&
-          popupContents.map((item, index) => {
-            const content = JSON.parse(item);
-            return (
-              <Popup
-                id={index}
-                content={
-                  <>
-                    <b>Additional Details</b>
-                    <p>
-                      Original location:{" "}
-                      {content.originalLocation ? content.originalLocation : ""}{" "}
-                      <br />
-                      Publisher: {content.publisher
-                        ? content.publisher
-                        : ""}{" "}
-                      <br />
-                      Script: {content.script ? content.script : ""} <br />
-                      Page count: {content.pageCount
-                        ? content.pageCount
-                        : ""}{" "}
-                      <br />
-                      Dimensions: {content.dimensions
-                        ? content.dimensions
-                        : ""}{" "}
-                      <br />
-                      Additional information:{" "}
-                      {content.additionalInfo ? content.additionalInfo : ""}
-                    </p>
-                  </>
-                }
-                handleClose={closePopup}
-              />
-            );
-          })}
-      </div>
+
       <Pagination
         className="pagination-bar"
         currentPage={currentPage}

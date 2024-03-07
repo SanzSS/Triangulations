@@ -1,6 +1,5 @@
 import React from "react";
 import SearchBar from "./SearchBar";
-import Select from "react-select";
 import { useState, useEffect } from "react";
 import {
   typeFilterKeys,
@@ -9,14 +8,11 @@ import {
   genreFilterKeys,
   defaultDateValues,
   defaultDimensionValues,
+  dimensionFilterKeys,
 } from "./FilterUtils";
-import DoubleSlider from "./DoubleSlider";
 import "../ExploreStyles/FilterBar.css";
 
 const FilterBar = (props) => {
-  let h,
-    g,
-    n = 0;
   const [checkedHijiri, setCheckedHijiri] = useState("");
   const [checkedGregorian, setCheckedGregorian] = useState("");
   const [checkedNone, setCheckedNone] = useState("");
@@ -24,8 +20,10 @@ const FilterBar = (props) => {
   const handleTypeFilterChange = (e) => {
     setTypeFilter(e.target.value);
   };
-  const [number1, setNumber1] = useState(null);
-  const [number2, setNumber2] = useState(null);
+  const [number1, setNumber1] = useState(0);
+  const [number2, setNumber2] = useState(2000);
+  const [dateFilter, setDateFilter] = useState([number1, number2]);
+
   const handleSubmit = () => {
     setDateFilter([number1, number2]);
   };
@@ -33,6 +31,12 @@ const FilterBar = (props) => {
   const [languageFilter, setLanguageFilter] = useState(null);
   const handleLanguageFilterChange = (e) => {
     setLanguageFilter(e.target.value);
+  };
+
+  const { calendarType, onCalendarTypeChange } = props;
+  const handleCalendarTypeChange = (e) => {
+    console.log(e.target.getAttribute("aria-label"));
+    onCalendarTypeChange(e.target.getAttribute("aria-label"));
   };
 
   const [scriptFilter, setScriptFilter] = useState(null);
@@ -52,19 +56,23 @@ const FilterBar = (props) => {
     setGenreFilter(value);
   };
 
-  const [dateFilter, setDateFilter] = useState(defaultDateValues);
   const handleDateFilterChange = (bounds) => {
     console.log(bounds);
     setDateFilter(bounds);
   };
 
-  const [dimensionFilter, setDimensionFilter] = useState(
-    defaultDimensionValues
-  );
-  const handleDimensionFilterChange = (bounds) => {
-    console.log(bounds);
-    setDimensionFilter(bounds);
+  const [dimensionFilter, setDimensionFilter] = useState(null);
+  const handleDimensionFilterChange = (e) => {
+    setDimensionFilter(e.target.value);
   };
+
+  // const [dimensionFilter, setDimensionFilter] = useState(
+  //     defaultDimensionValues
+  // );
+  // const handleDimensionFilterChange = (bounds) => {
+  //     console.log(bounds);
+  //     setDimensionFilter(bounds);
+  // };
 
   // Handles the lag in asynchronous function setState()
   useEffect(() => {
@@ -74,7 +82,14 @@ const FilterBar = (props) => {
     props.filterByGenre(genreFilter);
     props.filterByDate(dateFilter);
     props.filterByDimension(dimensionFilter);
-  });
+  }, [
+    typeFilter,
+    languageFilter,
+    scriptFilter,
+    genreFilter,
+    dateFilter,
+    dimensionFilter,
+  ]);
   return (
     <div className="grid font items-end">
       <div className="flex flex-col">
@@ -145,9 +160,7 @@ const FilterBar = (props) => {
             return <option value={key}>{key}</option>;
           })}
         </select>
-     
       </div>
-
 
       <div className="mb-[19px]">
         <legend className="text-[14px]">Calendar:</legend>
@@ -161,13 +174,14 @@ const FilterBar = (props) => {
               checkedHijiri
             }
             name="options"
-            aria-label="Hijiri"
-            onChange={() => {
+            aria-label="Hijri"
+            onChange={(e) => {
               if (checkedHijiri === "") {
                 setCheckedGregorian("");
                 setCheckedHijiri("!bg-[#2779a7] !border-black !text-white");
                 setCheckedNone("");
               }
+              handleCalendarTypeChange(e);
             }}
           />
           <input
@@ -178,12 +192,13 @@ const FilterBar = (props) => {
             }
             name="options"
             aria-label="Gregorian"
-            onChange={() => {
+            onChange={(e) => {
               if (checkedGregorian === "") {
                 setCheckedGregorian("!bg-[#2779a7] !border-black !text-white");
                 setCheckedHijiri("");
                 setCheckedNone("");
               }
+              handleCalendarTypeChange(e);
             }}
           />
           <input
@@ -194,26 +209,28 @@ const FilterBar = (props) => {
             }
             name="options"
             aria-label="None"
-            onChange={() => {
+            onChange={(e) => {
               if (checkedNone === "") {
                 setCheckedGregorian("");
                 setCheckedHijiri("");
                 setCheckedNone("!bg-[#2779a7] !border-black !text-white");
               }
+              handleCalendarTypeChange(e);
             }}
           />
-
         </div>
-
       </div>
-      <form className="flex flex-col mb-[19px]" onSubmit={handleSubmit}>
+      <form className="flex flex-col mb-[19px]">
         <p className="text-[14px]  mb-0">Start:</p>
         <input
           type="number"
           className="input  text-[12px] input-bordered border-black bg-inherit mb-0"
           value={number1}
           required
-          onChange={(e) => setNumber1(parseInt(e.target.value))}
+          onChange={(e) => {
+            setNumber1(parseInt(e.target.value));
+            console.log(number1);
+          }}
         ></input>
         <p className="text-[14px]  mb-0">End:</p>
         <input
@@ -221,14 +238,32 @@ const FilterBar = (props) => {
           className="input text-[12px] input-bordered border-black bg-inherit"
           value={number2}
           required
-          onChange={(e) => setNumber2(parseInt(e.target.value))}
+          onChange={(e) => {
+            setNumber2(parseInt(e.target.value));
+          }}
         ></input>
         <input
-          type="submit"
+          onClick={handleSubmit}
           value="Apply"
           className="submit !btn !btn-xs !btn-outline !text-[12px] mt-2 !mb-0"
         ></input>
       </form>
+      <div className="flex flex-col">
+        <small className="text-[14px]">Dimension:</small>
+        <select
+          id="type"
+          required
+          onChange={handleDimensionFilterChange}
+          className="select text-[12px] bg-inherit select-bordered border-black"
+        >
+          <option value={null} selected>
+            All
+          </option>
+          {dimensionFilterKeys.map((key) => {
+            return <option value={key}>{key}</option>;
+          })}
+        </select>
+      </div>
     </div>
   );
 };
