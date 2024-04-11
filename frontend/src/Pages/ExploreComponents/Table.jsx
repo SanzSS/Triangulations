@@ -5,20 +5,19 @@ import ColumnLabels from "./ColumnLabels";
 import "../ExploreStyles/DisplayTable.css";
 
 const Table = (props) => {
-  console.log('refresh')
   const database = props.database;
-  const [indices, setIndices] = useState([]);
-  let pageSize = 30;
+  let pageSize = 40;
   const [currentPage, setCurrentPage] = useState(1);
   const [sortConfig, setSortConfig] = useState(null);
 
   let sortedDatabase = database;
-  const handleRowClick = (index, rowData) => {
-
-    if (sessionStorage.getItem(index) === null) {
-      sessionStorage.setItem(index, JSON.stringify(rowData));
+  const handleRowClick = (rowData) => {
+    console.log(rowData);
+    console.log(parseInt(rowData.key));
+    if (sessionStorage.getItem(parseInt(rowData.key)) === null) {
+      sessionStorage.setItem(parseInt(rowData.key), JSON.stringify(rowData));
     } else {
-      sessionStorage.removeItem(index);
+      sessionStorage.removeItem(parseInt(rowData.key));
     }
   };
   if (sortConfig !== null) {
@@ -69,46 +68,35 @@ const Table = (props) => {
   const defaultValue = "N/A";
 
   const [popupContents, setPopupContents] = useState([]);
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
   const closePopup = (index) => {
-    console.log(index, database[index]);
     setPopupContents((prevPopupContents) => {
       return prevPopupContents.filter((_, i) => i !== index);
     });
     setIndices((prevIndices) => {
       return prevIndices.filter((_, i) => i !== index);
     });
-    currentTableData[index]["selected"] = false;
   };
 
   useEffect(() => {
     let popups = [];
-    let indexes = [];
 
     for (let i = 0; i < sessionStorage.length; i++) {
       const key = sessionStorage.key(i);
       const value = sessionStorage.getItem(key);
       popups.push(value);
-      indexes.push(parseInt(key));
     }
-    console.log(sessionStorage);
     setPopupContents(popups);
-    setIndices(indexes);
   }, []);
 
-  const togglePopupRow = (index) => {
-    console.log(index, database[index]);
+  const togglePopupRow = (row) => {
 
-    if (!popupContents.includes(JSON.stringify(database[index]))) {
+    if (!popupContents.includes(JSON.stringify(row))) {
       setPopupContents((prevPopupContents) => {
-        console.log([...prevPopupContents, JSON.stringify(database[index])]);
-        return [...prevPopupContents, JSON.stringify(database[index])];
+        return [...prevPopupContents, JSON.stringify(row)];
       });
-      setIndices((prevIndices) => {
-        return [...prevIndices, index];
-      });
+  
     } else {
-      closePopup(popupContents.indexOf(JSON.stringify(database[index])));
+      closePopup(popupContents.indexOf(JSON.stringify(row)));
     }
     
   };
@@ -119,10 +107,8 @@ const Table = (props) => {
         <ColumnLabels toggleSort={toggleSort} />
         <tbody>
           {currentTableData.map((r, index) => {
-            console.log(JSON.stringify(r));
-            console.log(popupContents[index]);
+   
             let color = " bg-[#B1A296]";
-            console.log(popupContents.includes(JSON.stringify(currentTableData[index])));
             if (
               popupContents.includes(JSON.stringify(r))
             ) {
@@ -136,8 +122,8 @@ const Table = (props) => {
                   }
                   key={index}
                   onClick={() => {
-                    togglePopupRow(index);
-                    handleRowClick(index, r);
+                    togglePopupRow(r);
+                    handleRowClick(r);
                   }}
                 >
                   <td className="text-[14px]">

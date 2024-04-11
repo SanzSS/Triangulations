@@ -22,3 +22,9 @@ html, body {
     margin: 0;
 
 }
+
+@media screen and (max-width: 1330px) {
+    body {
+        width: max-content !important;
+    }
+}

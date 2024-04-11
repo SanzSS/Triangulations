@@ -4,7 +4,7 @@ export const navData = [
         id: 1,
         // icon: <TravelExploreIcon />,
         text: "Explore",
-        link: "/explore",
+        link: "/",
     },
     // {
     //     id: 2,
