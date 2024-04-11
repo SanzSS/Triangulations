@@ -1,19 +1,26 @@
-import React, { useState, useMemo, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Pagination from "./Pagination";
-import Popup from "./Popup";
+
 import ColumnLabels from "./ColumnLabels";
 import "../ExploreStyles/DisplayTable.css";
-import { DataContext } from "../../DataContext";
 
 const Table = (props) => {
+  console.log('refresh')
   const database = props.database;
-
-  const { handleRowClick } = useContext(DataContext);
+  const [indices, setIndices] = useState([]);
   let pageSize = 30;
   const [currentPage, setCurrentPage] = useState(1);
   const [sortConfig, setSortConfig] = useState(null);
 
   let sortedDatabase = database;
+  const handleRowClick = (index, rowData) => {
+
+    if (sessionStorage.getItem(index) === null) {
+      sessionStorage.setItem(index, JSON.stringify(rowData));
+    } else {
+      sessionStorage.removeItem(index);
+    }
+  };
   if (sortConfig !== null) {
     sortedDatabase = [...database].sort((a, b) => {
       const key = sortConfig.key;
@@ -68,25 +75,25 @@ const Table = (props) => {
     setPopupContents((prevPopupContents) => {
       return prevPopupContents.filter((_, i) => i !== index);
     });
+    setIndices((prevIndices) => {
+      return prevIndices.filter((_, i) => i !== index);
+    });
+    currentTableData[index]["selected"] = false;
   };
 
   useEffect(() => {
-    let temp = [];
+    let popups = [];
+    let indexes = [];
+
     for (let i = 0; i < sessionStorage.length; i++) {
       const key = sessionStorage.key(i);
       const value = sessionStorage.getItem(key);
-      temp.push(value);
+      popups.push(value);
+      indexes.push(parseInt(key));
     }
     console.log(sessionStorage);
-    let open = true;
-    if (temp.length === 0) {
-      open = false;
-    }
-    console.log("hi" + temp);
-    setPopupContents((prev) => {
-      return temp;
-    });
-    setIsPopupOpen(open);
+    setPopupContents(popups);
+    setIndices(indexes);
   }, []);
 
   const togglePopupRow = (index) => {
@@ -97,12 +104,13 @@ const Table = (props) => {
         console.log([...prevPopupContents, JSON.stringify(database[index])]);
         return [...prevPopupContents, JSON.stringify(database[index])];
       });
+      setIndices((prevIndices) => {
+        return [...prevIndices, index];
+      });
     } else {
       closePopup(popupContents.indexOf(JSON.stringify(database[index])));
     }
-    if (!isPopupOpen) {
-      setIsPopupOpen(!isPopupOpen);
-    }
+    
   };
   return (
     <div role="document" className="">
@@ -111,13 +119,12 @@ const Table = (props) => {
         <ColumnLabels toggleSort={toggleSort} />
         <tbody>
           {currentTableData.map((r, index) => {
+            console.log(JSON.stringify(r));
+            console.log(popupContents[index]);
             let color = " bg-[#B1A296]";
-
-            //TODO - Highlighted row should stay highlighted when changing pages/rerendering/reloading.
-
+            console.log(popupContents.includes(JSON.stringify(currentTableData[index])));
             if (
-              popupContents.includes(JSON.stringify(database[index])) ||
-              popupContents.includes(database[index])
+              popupContents.includes(JSON.stringify(r))
             ) {
               color = " bg-[#2779a7]";
             }
@@ -125,7 +132,7 @@ const Table = (props) => {
               <>
                 <tr
                   className={
-                    "row-item  hover:bg-[#2779a7] hover:cursor-pointer" + color
+                    "row-item  hover:bg-[#2779a7] hover:cursor-pointer " + color
                   }
                   key={index}
                   onClick={() => {
@@ -160,6 +167,8 @@ const Table = (props) => {
                   <td className="text-[14px]">
                     {r.dimensionLabel ? r.dimensionLabel : defaultValue}
                   </td>
+                  
+                   
                 </tr>
               </>
             );
@@ -172,7 +181,10 @@ const Table = (props) => {
         currentPage={currentPage}
         totalCount={database.length}
         pageSize={pageSize}
-        onPageChange={(page) => setCurrentPage(page)}
+        onPageChange={(page) => {
+          setCurrentPage(page);
+          setIsPopupOpen(false);
+        }}
       />
     </div>
   );

@@ -91,7 +91,7 @@ const FilterBar = (props) => {
     dimensionFilter,
   ]);
   return (
-    <div className="grid font items-end">
+    <div className="font items-end flex flex-col mr-4 lg:mr-0 lg:flex-row gap-4">
       <div className="flex flex-col">
         <small className="text-[14px]">Search:</small>
         <SearchBar onChange={props.searchChange} />

@@ -9,11 +9,11 @@ import { dataTable } from "./TestDataSet";
 
 
 export default function Explore(props) {
-    const [database, setDatabase] = useState([]);
+    const [database, setDatabase] = useState(dataTable);
 
-    useEffect(() => {
-        axios.get("/api").then((res) => setDatabase(res.data));
-    }, []);
+    // useEffect(() => {
+    //     axios.get("/api").then((res) => setDatabase(res.data));
+    // }, []);
 
     // Search functionality
     const [searchQuery, setSearchQuery] = useState("");
@@ -115,7 +115,8 @@ export default function Explore(props) {
     return (
       <div>
         <h1 className="font mb-4">Explore Our Collection!</h1>
-        <FilterBar
+        <div className="flex lg:flex-col flex-row">
+            <FilterBar
           searchChange={(searchQuery) => setSearchQuery(searchQuery)}
           filterByType={(typeFilter) => setTypeFilter(typeFilter)}
           filterByLanguage={(languageFilter) =>
@@ -130,7 +131,8 @@ export default function Explore(props) {
           calendarType={calendarType}
           onCalendarTypeChange={(calendarType) => setCalendarType(calendarType)}
         />
-        <Table database={filterData(database)}></Table>{" "}
+            <Table database={filterData(database)}></Table>{" "}
+            </div>
         {/* filterData(database)}></Table> */}
       </div>
     );

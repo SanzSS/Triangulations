@@ -31,6 +31,7 @@ class Text(BaseModel):
     normalizedDate: int
     dimensionLabel: str
     date_ce: str
+    link: str 
 
 
 DB: List[Text] = []
@@ -49,10 +50,12 @@ def normalizeDate(date: str):
 
 
 def parseLineToText(line):
+    if (len(line) < 24):
+        line.append("")
     return Text(authorID=line[0], authorNameOriginal=line[1], authorNameTranslit=line[2], titleID=line[3], titleOriginal=line[5],
                 titleTranslit=line[6], language=line[7], genre=line[8], textType=line[9], date=normalizeDate(line[10]), originalLocation=line[11],
                 publisher=line[12], script=line[13], pageCount=line[14], dimensions=line[15], additionalInfo=line[16],
-                specificEditionBibliography=line[17], contentLocation=line[18], generalBibliography=line[19], notes=line[20], normalizedDate=normalizeDate(line[10]), dimensionLabel=line[21], date_ce=line[22]
+                specificEditionBibliography=line[17], contentLocation=line[18], generalBibliography=line[19], notes=line[20], normalizedDate=normalizeDate(line[10]), dimensionLabel=line[21], date_ce=line[22], link=line[23]
                )
 
 

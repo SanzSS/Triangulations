@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import { DataContext } from "../../DataContext";
 import "../SandpitStyles/Sandpit.css";
 import Draggable from "react-draggable";
 
@@ -47,6 +46,10 @@ const Sandpit = () => {
       color = "bg-red-500";
       text = "RED";
     }
+    let addLink = true;
+    if (row.link === "") {
+      addLink = false;
+    }
     temp.push([
       <div className={"card-body font max-h-fit "}>
         <div className="flex justify-center">
@@ -77,7 +80,11 @@ const Sandpit = () => {
           <span className="font-bold">Dimensions:</span>{" "}
           {row.dimensions ? row.dimensions : ""} <br />
           <span className="font-bold">Additional information: </span>
-          {row.additionalInfo ? row.additionalInfo : ""}
+          {row.additionalInfo ? row.additionalInfo : ""}<br />
+          {addLink &&
+          <span className="font-bold" >Some Link: <br />
+          <a href={row.link ? row.link : ""} className=" hover:text-[#2779a7]">{row.link ? row.link : ""} </a></span>
+          }
         </p>
         <div className="card-actions justify-evenly">
           <div className="dropdown">
@@ -209,7 +216,7 @@ const Sandpit = () => {
             <Draggable>
               <div
                 className={
-                  "card card-bordered card-compact w-[10rem] bg-base-100 shadow-xl " +
+                  "card card-bordered card-compact w-[20rem] bg-base-100 shadow-xl " +
                   row[1]
                 }
                 key={index}
