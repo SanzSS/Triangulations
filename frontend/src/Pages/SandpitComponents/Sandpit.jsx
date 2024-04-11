@@ -75,12 +75,12 @@ const Sandpit = () => {
           {row.publisher ? row.publisher : ""} <br />
           <span className="font-bold">Script:</span>{" "}
           {row.script ? row.script : ""} <br />
-          <span className="font-bold">Page count: </span>{" "}
+          {/* <span className="font-bold">Page count: </span>{" "}
           {row.pageCount ? row.pageCount : ""} <br />
           <span className="font-bold">Dimensions:</span>{" "}
           {row.dimensions ? row.dimensions : ""} <br />
           <span className="font-bold">Additional information: </span>
-          {row.additionalInfo ? row.additionalInfo : ""}<br />
+          {row.additionalInfo ? row.additionalInfo : ""}<br /> */}
           {addLink &&
           <span className="font-bold" >Some Link: <br />
           <a href={row.link ? row.link : ""} className=" hover:text-[#2779a7]">{row.link ? row.link : ""} </a></span>
@@ -216,7 +216,7 @@ const Sandpit = () => {
             <Draggable>
               <div
                 className={
-                  "card card-bordered card-compact w-[20rem] bg-base-100 shadow-xl " +
+                  "card card-bordered card-compact w-[15rem] bg-base-100 shadow-xl " +
                   row[1]
                 }
                 key={index}
