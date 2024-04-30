@@ -72,9 +72,6 @@ const Table = (props) => {
     setPopupContents((prevPopupContents) => {
       return prevPopupContents.filter((_, i) => i !== index);
     });
-    setIndices((prevIndices) => {
-      return prevIndices.filter((_, i) => i !== index);
-    });
   };
 
   useEffect(() => {
@@ -169,7 +166,6 @@ const Table = (props) => {
         pageSize={pageSize}
         onPageChange={(page) => {
           setCurrentPage(page);
-          setIsPopupOpen(false);
         }}
       />
     </div>
