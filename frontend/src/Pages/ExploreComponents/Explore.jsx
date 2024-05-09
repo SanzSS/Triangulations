@@ -12,7 +12,7 @@ export default function Explore(props) {
     const [database, setDatabase] = useState([]);
 
     useEffect(() => {
-        axios.get("/api").then((res) => setDatabase(res.data));
+        axios.get("https://triangulations.onrender.com/api").then((res) => setDatabase(res.data));
     }, []);
 
     // Search functionality
